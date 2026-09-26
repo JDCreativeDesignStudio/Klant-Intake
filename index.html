@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Intake | JD Creative Design Studio</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:ital,wght@0,400;1,400&display=swap');
+:root{--brown:#362923;--taupe:#826558;--beige:#f8f5f2;--soft:#a79a93;--white:#fff;--line:#362923}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:'Montserrat',Arial,sans-serif;color:var(--brown);background:var(--beige);-webkit-font-smoothing:antialiased}
+button,input,textarea{font:inherit}.app{min-height:100vh;overflow:hidden}.screen{display:none;min-height:100vh;padding:56px 24px}.screen.active{display:flex;animation:fade .42s ease both}@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.welcome{background:#140f0c;color:#fff;align-items:center;justify-content:center;text-align:center}.welcome-inner{width:min(760px,100%);margin-top:-3vh}.eyebrow{font-family:'Playfair Display',Georgia,serif;font-weight:400;font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--taupe);margin:0 0 28px}.welcome h1{font-family:'Playfair Display',Georgia,serif;font-size:34px;line-height:1.5;letter-spacing:.5px;margin:0 0 22px;font-weight:400}.welcome h1 em{color:var(--taupe);font-weight:400}.welcome p{max-width:650px;margin:0 auto 40px;color:#8f8783;font-size:15px;line-height:1.75}.outline-btn{appearance:none;background:transparent;border:1px solid var(--taupe);color:var(--taupe);padding:18px 25px;min-width:168px;text-transform:uppercase;letter-spacing:1.8px;font-size:11px;cursor:pointer;transition:.3s ease}.outline-btn:hover,.outline-btn:focus-visible{border-color:#a98270;box-shadow:0 0 8px rgba(169,130,112,.5),0 0 20px rgba(130,101,88,.28);outline:none}.time{display:block;margin-top:19px;font-size:12px;color:#fff}.time span{display:inline-block;width:11px;height:11px;background:#fff;border-radius:50%;margin-right:4px;vertical-align:-1px;position:relative}.time span:after{content:"";position:absolute;width:1px;height:3px;background:#140f0c;left:5px;top:2px;transform:rotate(-25deg);transform-origin:bottom}
+.question{background:var(--beige);align-items:center;justify-content:center}.q-inner{width:min(720px,100%);position:relative}.progress{position:fixed;top:0;left:0;height:2px;background:var(--taupe);transition:width .35s ease;z-index:5}.qhead{display:flex;align-items:flex-start;gap:12px}.num{flex:none;margin-top:4px;background:var(--brown);color:#fff;font-size:11px;border-radius:3px;min-width:18px;height:18px;display:grid;place-items:center}.question h2{font-family:'Playfair Display',Georgia,serif;font-size:31px;line-height:1.25;font-weight:500;margin:0;color:var(--brown)}.desc{margin:11px 0 34px 30px;color:var(--taupe);font-family:'Montserrat',Arial,sans-serif;font-size:16px;font-style:italic;line-height:1.55}.field{margin:0 0 27px 30px}.field label{display:block;font-size:11px;letter-spacing:1.3px;text-transform:uppercase;color:var(--taupe);margin-bottom:9px}.line-input,.line-textarea{width:100%;border:0;border-bottom:1px solid var(--brown);border-radius:0;background:transparent;padding:11px 1px 12px;color:var(--brown);font-family:'Montserrat',Arial,sans-serif;font-size:25px;outline:none}.line-input::placeholder,.line-textarea::placeholder{color:#c4bdb9}.line-input:focus,.line-textarea:focus{border-bottom-color:var(--taupe);box-shadow:0 1px 0 var(--taupe)}.line-textarea{min-height:105px;resize:vertical;font-size:20px;line-height:1.5}.choices{margin-left:30px;display:grid;gap:10px}.choice{display:flex;align-items:center;gap:12px;width:100%;padding:14px 16px;border:1px solid #d8cec8;background:rgba(255,255,255,.25);cursor:pointer;transition:.2s;color:var(--brown);text-align:left}.choice:hover{border-color:var(--taupe);background:rgba(255,255,255,.5)}.choice.selected{border-color:var(--taupe);box-shadow:inset 0 0 0 1px var(--taupe)}.mark{width:18px;height:18px;border:1px solid var(--taupe);display:grid;place-items:center;font-size:11px;flex:none}.choice.selected .mark:after{content:'✓'}.actions{display:flex;align-items:center;gap:18px;margin:38px 0 0 30px}.next{border:1px solid var(--brown);background:var(--brown);color:#fff;padding:15px 24px;text-transform:uppercase;letter-spacing:1.5px;font-size:10px;cursor:pointer;transition:.25s}.next:hover{background:transparent;color:var(--brown)}.back{border:0;background:transparent;color:var(--taupe);font-size:12px;cursor:pointer;padding:10px 0}.error{display:none;margin:16px 0 0 30px;color:#8b3f34;font-size:12px}.conditional{display:none;margin-top:26px}.conditional.show{display:block}.end{text-align:center}.end h2{font-size:36px}.end .desc{margin-left:0}.end .actions{justify-content:center;margin-left:0}.small{font-size:12px;color:var(--soft);margin-top:16px}.status{display:none;margin-top:18px;font-size:13px}.status.show{display:block}
+@media(max-width:700px){.screen{padding:42px 22px}.welcome h1{font-size:29px}.welcome p{font-size:14px}.question{align-items:flex-start;padding-top:18vh}.question h2{font-size:25px}.desc{margin-left:30px;margin-bottom:28px}.field,.choices,.actions,.error{margin-left:30px}.line-input{font-size:22px}.choice{padding:13px}.q-inner{width:100%}}
+</style>
+
+<style>
+/* Introductietekst onder de hoofdtitel */
+.intro-text,
+.hero-text,
+.welcome-text,
+.intro p,
+.hero p,
+.welcome p {
+  font-family: 'Montserrat', Arial, sans-serif !important;
+  font-weight: 400 !important;
+  line-height: 2 !important;
+  letter-spacing: 0.5px !important;
+}
+</style>
+
+
+<style>
+/* =========================================
+   JD CREATIVE — DEFINITIEVE TYPOGRAFIE
+   ========================================= */
+
+/* Algemene questionnaire tekst */
+body,
+input,
+textarea,
+select,
+button,
+label,
+.option,
+.choice,
+.answer,
+.helper,
+.hint,
+.progress,
+.nav,
+.question-description,
+.question-subtitle {
+  font-family: 'Montserrat', Arial, sans-serif !important;
+  font-weight: 400;
+}
+
+/* Alle grote titels en vragen */
+h1, h2, h3,
+.question-title,
+.question h1,
+.question h2,
+.question h3,
+.step-title {
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.5px;
+}
+
+/* Kleine boventitel / eyebrow */
+.eyebrow,
+.question-eyebrow,
+.step-eyebrow {
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-weight: 400 !important;
+}
+
+/* Introductie onder titels */
+.intro-text,
+.hero-text,
+.welcome-text,
+.intro p,
+.hero p,
+.welcome p,
+.question-description,
+.question-subtitle {
+  font-family: 'Montserrat', Arial, sans-serif !important;
+  font-weight: 400 !important;
+  line-height: 2 !important;
+  letter-spacing: 0.5px !important;
+}
+
+/* Antwoorden en invoervelden */
+input,
+textarea,
+select,
+.option,
+.choice,
+.answer {
+  font-family: 'Montserrat', Arial, sans-serif !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.5px;
+}
+
+/* Buttons */
+button,
+.button,
+.start-button,
+.next-button,
+.prev-button {
+  font-family: 'Montserrat', Arial, sans-serif !important;
+}
+
+/* Cursief accent zoals 'samenwerken!' */
+em,
+.accent-italic {
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-weight: 400 !important;
+  font-style: italic !important;
+}
+</style>
+
+
+<style>
+/* Optionele logo-upload binnen de conditionele huisstijl-vraag */
+.logo-upload-wrap{margin:30px 0 0 30px}
+.logo-upload-label{
+  display:block;
+  margin:0 0 10px;
+  font-family:'Montserrat',Arial,sans-serif;
+  font-size:11px;
+  font-weight:400;
+  letter-spacing:1.3px;
+  text-transform:uppercase;
+  color:var(--taupe);
+}
+.logo-drop{
+  min-height:150px;
+  border:1px dashed var(--brown);
+  background:rgba(255,255,255,.18);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:24px;
+  cursor:pointer;
+  transition:.25s ease;
+}
+.logo-drop:hover,.logo-drop.drag{
+  border-color:var(--taupe);
+  background:rgba(255,255,255,.42);
+  box-shadow:0 0 12px rgba(130,101,88,.10);
+}
+.logo-drop-title{
+  margin:0 0 8px;
+  font-family:'Playfair Display',Georgia,serif;
+  font-size:20px;
+  font-weight:400;
+  letter-spacing:.5px;
+  color:var(--brown);
+}
+.logo-drop-copy{
+  margin:0;
+  font-family:'Montserrat',Arial,sans-serif;
+  font-size:12px;
+  font-weight:400;
+  line-height:2;
+  letter-spacing:.5px;
+  color:var(--taupe);
+}
+.logo-files{display:none}
+.logo-file-list{list-style:none;margin:12px 0 0;padding:0}
+.logo-file-list li{
+  display:flex;justify-content:space-between;gap:14px;
+  padding:9px 0;border-bottom:1px solid rgba(54,41,35,.18);
+  font-family:'Montserrat',Arial,sans-serif;font-size:12px;color:var(--brown)
+}
+.logo-upload-note{
+  margin:10px 0 0;
+  font-family:'Montserrat',Arial,sans-serif;
+  font-size:11px;line-height:1.8;letter-spacing:.3px;color:var(--soft)
+}
+@media(max-width:700px){
+  .logo-upload-wrap{margin-left:0}
+  .logo-drop{min-height:135px}
+}
+</style>
+
+
+<style>
+/* Laatste pagina */
+.screen:last-of-type .inner {
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+.screen:last-of-type .nav {
+  justify-content: center !important;
+}
+</style>
+
+
+<style>
+/* Definitieve laatste pagina */
+.screen:last-of-type .inner{
+  text-align:center !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
+}
+.screen:last-of-type{
+  position:relative;
+}
+.screen:last-of-type .back{
+  position:absolute !important;
+  right:28px !important;
+  bottom:28px !important;
+  margin:0 !important;
+}
+@media(max-width:650px){
+  .screen:last-of-type .back{
+    right:22px !important;
+    bottom:22px !important;
+  }
+}
+</style>
+
+
+<style>
+.screen:last-of-type .final-subtitle{
+ display:block;margin-top:8px;
+ font-family:'Playfair Display',Georgia,serif;
+ font-size:22px;line-height:1.4;font-weight:400;letter-spacing:.5px;color:var(--brown);
+}
+.screen:last-of-type .final-note{
+ max-width:300px;margin:12px auto 0 !important;
+ font-family:'Montserrat',Arial,sans-serif !important;
+ font-size:10px !important;line-height:1.7 !important;
+ letter-spacing:.35px !important;color:var(--taupe) !important;
+}
+</style>
+
+
+<style>
+/* Definitieve styling laatste pagina */
+.screen.end{position:relative}
+.screen.end .q-inner{text-align:center !important;margin:0 auto !important}
+.screen.end h2{margin-bottom:0 !important}
+.screen.end .end-subtitle{
+  margin:8px 0 0;
+  font-family:'Playfair Display',Georgia,serif;
+  font-size:22px;
+  line-height:1.4;
+  font-weight:400;
+  letter-spacing:.5px;
+  color:var(--brown);
+}
+.screen.end .desc{margin-left:auto !important;margin-right:auto !important}
+.screen.end .actions{
+  justify-content:center !important;
+  margin-top:28px !important;
+}
+.screen.end .final-note{
+  width:max-content;
+  max-width:100%;
+  margin:9px auto 0 !important;
+  font-family:'Montserrat',Arial,sans-serif !important;
+  font-size:9px !important;
+  line-height:1.5 !important;
+  font-weight:400 !important;
+  letter-spacing:.25px !important;
+  color:var(--taupe) !important;
+}
+.screen.end .end-back{
+  position:fixed !important;
+  right:28px !important;
+  bottom:28px !important;
+  margin:0 !important;
+}
+@media(max-width:650px){
+  .screen.end .end-subtitle{font-size:19px}
+  .screen.end .end-back{right:20px !important;bottom:20px !important}
+  .screen.end .final-note{font-size:8px !important}
+}
+</style>
+
+
+<style>
+.screen.end h2{
+  font-size:clamp(42px,5vw,58px) !important;
+  line-height:1.15 !important;
+  margin-bottom:20px !important;
+}
+@media(max-width:650px){
+  .screen.end h2{font-size:40px !important;}
+}
+</style>
+
+</head>
+<body>
+<div class="app">
+  <section class="screen welcome active" data-screen="0"><div class="welcome-inner">
+    <div class="eyebrow">BEDANKT! JE BESTELLING IS AFGEROND</div>
+    <h1>Leuk dat we gaan <em>samenwerken!</em></h1>
+    <p>Voordat ik voor je aan de slag ga, wil ik jouw bedrijf, doelgroep en wensen graag beter leren kennen. Beantwoord de volgende vragen zo uitgebreid mogelijk; jouw input vormt de basis voor het ontwerp.</p>
+    <button class="outline-btn" type="button" data-start>Start de intake</button>
+    <span class="time"><span></span>Duurt ongeveer 5–10 minuten</span>
+  </div></section>
+
+  <form id="intakeForm" novalidate enctype="multipart/form-data">
+<input type="hidden" id="forminitAnswers" name="fi-text-intake-antwoorden" value="">
+
+    <section class="screen question" data-screen="1"><div class="progress"></div><div class="q-inner">
+      <div class="qhead"><span class="num">1</span><h2>Eerst even de praktische gegevens</h2></div><p class="desc">Om te beginnen heb ik een paar gegevens van je nodig.</p>
+      <div class="field"><label>Voornaam</label><input class="line-input" name="fi-sender-firstName" placeholder="Jouw voornaam" required></div>
+      <div class="field"><label>E-mailadres</label><input class="line-input" name="fi-sender-email" type="email" placeholder="jouw@email.nl" required></div>
+      <div class="field"><label>Bedrijfsnaam</label><input class="line-input" name="bedrijfsnaam" placeholder="Naam van je bedrijf" required></div>
+      <div class="error">Vul de verplichte velden in.</div><div class="actions"><button class="next" type="button" data-next>Volgende →</button></div>
+    </div></section>
+
+    <section class="screen question" data-screen="2"><div class="progress"></div><div class="q-inner"><div class="qhead"><span class="num">2</span><h2>Vertel me kort over jouw bedrijf</h2></div><p class="desc">Wat doe je, wat bied je aan en voor wie?</p><div class="field"><textarea class="line-textarea" name="over_bedrijf" placeholder="Typ je antwoord hier..." required></textarea></div><div class="error">Vul je antwoord in.</div><div class="actions"><button class="back" type="button" data-back>← Vorige</button><button class="next" type="button" data-next>Volgende →</button></div></div></section>
+
+    <section class="screen question" data-screen="3"><div class="progress"></div><div class="q-inner"><div class="qhead"><span class="num">3</span><h2>Voor wie moet jouw merk onweerstaanbaar worden?</h2></div><p class="desc">Vertel me wie je ideale klant is. Denk aan type klant, wensen, uitdagingen en wat voor hen belangrijk is.</p><div class="field"><textarea class="line-textarea" name="doelgroep" placeholder="Typ je antwoord hier..." required></textarea></div><div class="error">Vul je antwoord in.</div><div class="actions"><button class="back" type="button" data-back>← Vorige</button><button class="next" type="button" data-next>Volgende →</button></div></div></section>
+
+    <section class="screen question" data-screen="4"><div class="progress"></div><div class="q-inner"><div class="qhead"><span class="num">4</span><h2>Waarom kiezen klanten voor jou en niet voor een ander?</h2></div><p class="desc">Wat maakt jouw bedrijf, aanbod of manier van werken anders?</p><div class="field"><textarea class="line-textarea" name="onderscheid" placeholder="Typ je antwoord hier..." required></textarea></div><div class="error">Vul je antwoord in.</div><div class="actions"><button class="back" type="button" data-back>← Vorige</button><button class="next" type="button" data-next>Volgende →</button></div></div></section>
+
+    <section class="screen question" data-screen="5"><div class="progress"></div><div class="q-inner"><div class="qhead"><span class="num">5</span><h2>Hoe wil je dat jouw merk wordt ervaren?</h2></div><p class="desc">Kies maximaal drie woorden die het beste passen.</p><div class="choices" data-max="3" data-name="merkervaring">
+      <button type="button" class="choice"><span class="mark"></span>Premium</button><button type="button" class="choice"><span class="mark"></span>Persoonlijk</button><button type="button" class="choice"><span class="mark"></span>Betrouwbaar</button><button type="button" class="choice"><span class="mark"></span>Modern</button><button type="button" class="choice"><span class="mark"></span>Minimalistisch</button><button type="button" class="choice"><span class="mark"></span>Creatief</button><button type="button" class="choice"><span class="mark"></span>Krachtig</button><button type="button" class="choice"><span class="mark"></span>Toegankelijk</button><button type="button" class="choice"><span class="mark"></span>Elegant</button><button type="button" class="choice"><span class="mark"></span>Speels</button>
+    </div><input type="hidden" name="merkervaring"><div class="error">Kies minimaal één optie.</div><div class="actions"><button class="back" type="button" data-back>← Vorige</button><button class="next" type="button" data-next>Volgende →</button></div></div></section>
+
+    <section class="screen question" data-screen="6"><div class="progress"></div><div class="q-inner"><div class="qhead"><span class="num">6</span><h2>Wat wil je dat iemand voelt wanneer die jouw merk ziet?</h2></div><p class="desc">Denk bijvoorbeeld aan vertrouwen, rust, enthousiasme, kwaliteit of exclusiviteit.</p><div class="field"><textarea class="line-textarea" name="gevoel" placeholder="Typ je antwoord hier..." required></textarea></div><div class="error">Vul je antwoord in.</div><div class="actions"><button class="back" type="button" data-back>← Vorige</button><button class="next" type="button" data-next>Volgende →</button></div></div></section>
+
+    <section class="screen question" data-screen="7"><div class="progress"></div><div class="q-inner"><div class="qhead"><span class="num">7</span><h2>Heb je al een logo of huisstijl?</h2></div><p class="desc">Zo kan ik beter bepalen wat we behouden en wat we vernieuwen.</p><div class="choices single" data-name="bestaande_huisstijl"><button type="button" class="choice" data-value="Ja"><span class="mark"></span>Ja</button><button type="button" class="choice" data-value="Nee"><span class="mark"></span>Nee</button></div><input type="hidden" name="bestaande_huisstijl"><div class="conditional" data-if="Ja">
+  <div class="field">
+    <label>Wat wil je behouden en wat mag veranderen?</label>
+    <textarea class="line-textarea" name="huidige_stijl" placeholder="Vertel wat je goed vindt en waar je niet meer tevreden over bent..."></textarea>
+  </div>
+
+  <div class="logo-upload-wrap">
+    <label class="logo-upload-label">Huidig logo uploaden · optioneel</label>
+    <label class="logo-drop" id="logoDrop" for="logoFiles">
+      <div>
+        <p class="logo-drop-title">Upload hier je huidige logo</p>
+        <p class="logo-drop-copy">Sleep je bestanden hierheen of klik om te selecteren.<br>AI, EPS, SVG, PDF, PNG of JPG · maximaal 5 MB per bestand</p>
+      </div>
+    </label>
+    <input class="logo-files" id="logoFiles" name="fi-file-huidig-logo[]" type="file" accept=".ai,.eps,.svg,.pdf,.png,.jpg,.jpeg" multiple>
+    <ul class="logo-file-list" id="logoFileList"></ul>
+    <p class="logo-upload-note">Je kunt meerdere bestanden toevoegen. Deze stap is niet verplicht.</p>
+  </div>
+</div><div class="error">Maak een keuze.</div><div class="actions"><button class="back" type="button" data-back>← Vorige</button><button class="next" type="button" data-next>Volgende →</button></div></div></section>
+
+    <section class="screen question" data-screen="8"><div class="progress"></div><div class="q-inner"><div class="qhead"><span class="num">8</span><h2>Zijn er kleuren die je graag terug wilt zien?</h2></div><p class="desc">Vertel ook welke kleuren je absoluut niet wilt gebruiken.</p><div class="field"><textarea class="line-textarea" name="kleuren" placeholder="Typ je antwoord hier..."></textarea></div><div class="actions"><button class="back" type="button" data-back>← Vorige</button><button class="next" type="button" data-next>Volgende →</button></div></div></section>
+
+    <section class="screen question" data-screen="9"><div class="progress"></div><div class="q-inner"><div class="qhead"><span class="num">9</span><h2>Welke merken of stijlen spreken je aan?</h2></div><p class="desc">Dit mogen ook merken buiten jouw branche zijn. Vertel vooral wat je eraan aanspreekt.</p><div class="field"><textarea class="line-textarea" name="inspiratie" placeholder="Typ je antwoord hier..."></textarea></div><div class="actions"><button class="back" type="button" data-back>← Vorige</button><button class="next" type="button" data-next>Volgende →</button></div></div></section>
+
+    <section class="screen question" data-screen="10"><div class="progress"></div><div class="q-inner"><div class="qhead"><span class="num">10</span><h2>Heeft je bedrijf een slogan die we moeten meenemen?</h2></div><p class="desc">Alleen als deze onderdeel moet worden van de nieuwe identiteit.</p><div class="choices single" data-name="heeft_slogan"><button type="button" class="choice" data-value="Ja"><span class="mark"></span>Ja</button><button type="button" class="choice" data-value="Nee"><span class="mark"></span>Nee</button></div><input type="hidden" name="heeft_slogan"><div class="conditional" data-if="Ja"><div class="field"><label>Jouw slogan</label><input class="line-input" name="slogan" placeholder="Vul je slogan in"></div></div><div class="error">Maak een keuze.</div><div class="actions"><button class="back" type="button" data-back>← Vorige</button><button class="next" type="button" data-next>Volgende →</button></div></div></section>
+
+    <section class="screen question" data-screen="11"><div class="progress"></div><div class="q-inner"><div class="qhead"><span class="num">11</span><h2>Waar ga je jouw nieuwe huisstijl vooral gebruiken?</h2></div><p class="desc">Je kunt meerdere opties kiezen.</p><div class="choices" data-name="toepassingen"><button type="button" class="choice"><span class="mark"></span>Website</button><button type="button" class="choice"><span class="mark"></span>Social media</button><button type="button" class="choice"><span class="mark"></span>Drukwerk</button><button type="button" class="choice"><span class="mark"></span>Presentaties</button><button type="button" class="choice"><span class="mark"></span>Advertenties</button><button type="button" class="choice"><span class="mark"></span>Verpakkingen</button><button type="button" class="choice"><span class="mark"></span>Signing / voertuigbelettering</button><button type="button" class="choice"><span class="mark"></span>Anders</button></div><input type="hidden" name="toepassingen"><div class="error">Kies minimaal één optie.</div><div class="actions"><button class="back" type="button" data-back>← Vorige</button><button class="next" type="button" data-next>Volgende →</button></div></div></section>
+
+    <section class="screen question" data-screen="12"><div class="progress"></div><div class="q-inner"><div class="qhead"><span class="num">12</span><h2>Is er een belangrijke datum waar ik rekening mee moet houden?</h2></div><p class="desc">Bijvoorbeeld een lancering, opening, evenement of campagne.</p><div class="choices single" data-name="deadline"><button type="button" class="choice" data-value="Nee, geen specifieke deadline"><span class="mark"></span>Nee, geen specifieke deadline</button><button type="button" class="choice" data-value="Ja"><span class="mark"></span>Ja</button></div><input type="hidden" name="deadline"><div class="conditional" data-if="Ja"><div class="field"><label>Datum en toelichting</label><input class="line-input" name="deadline_toelichting" placeholder="Bijv. 15 november – lancering website"></div></div><div class="error">Maak een keuze.</div><div class="actions"><button class="back" type="button" data-back>← Vorige</button><button class="next" type="button" data-next>Volgende →</button></div></div></section>
+
+    <section class="screen question" data-screen="13"><div class="progress"></div><div class="q-inner"><div class="qhead"><span class="num">13</span><h2>Is er nog iets dat ik écht moet weten voordat ik begin?</h2></div><p class="desc">Alles wat nog niet aan bod is gekomen, maar wel belangrijk is voor het ontwerp.</p><div class="field"><textarea class="line-textarea" name="extra" placeholder="Typ je antwoord hier..."></textarea></div><div class="actions"><button class="back" type="button" data-back>← Vorige</button><button class="next" type="button" data-next>Naar afronden →</button></div></div></section>
+
+    <section class="screen question end" data-screen="14"><div class="progress"></div><div class="q-inner"><div class="eyebrow">Bijna klaar</div><h2>Dank je wel!</h2><p class="desc">Jouw antwoorden worden zorgvuldig doorgenomen.<br>Daarna neem ik contact met je op over de volgende stap.</p><div class="actions"><button class="next" id="submitBtn" type="submit">Verstuur mijn intake</button></div><p class="final-note">Je gegevens worden alleen gebruikt voor jouw project.</p><div class="status" id="status"></div><button class="back end-back" type="button" data-back>← Vorige</button></div></section>
+  </form>
+</div>
+<script src="https://forminit.com/sdk/v1/forminit.js"></script>
+<script>
+(function(){
+  const FORM_ID='VUL_HIER_JE_NIEUWE_FORMINIT_FORM_ID_IN';
+  const screens=[...document.querySelectorAll('.screen')];
+  const total=13; let current=0;
+  function show(n){screens.forEach(s=>s.classList.remove('active'));const target=document.querySelector('[data-screen="'+n+'"]');if(target){target.classList.add('active');current=n;target.querySelectorAll('.progress').forEach(p=>p.style.width=(Math.min(Math.max(n,1),total)/total*100)+'%');window.scrollTo(0,0);setTimeout(()=>{const f=target.querySelector('input:not([type=hidden]),textarea');if(f)f.focus({preventScroll:true})},250)}}
+  document.querySelector('[data-start]').onclick=()=>show(1);
+  function validate(section){const err=section.querySelector('.error');if(err)err.style.display='none';let ok=true;section.querySelectorAll('[required]').forEach(el=>{if(!el.value.trim()||(el.type==='email'&&!/^\S+@\S+\.\S+$/.test(el.value))){ok=false}});section.querySelectorAll('.choices').forEach(group=>{const hidden=section.querySelector('input[name="'+group.dataset.name+'"]');if(hidden&&!hidden.value)ok=false});if(!ok&&err)err.style.display='block';return ok}
+  document.querySelectorAll('[data-next]').forEach(b=>b.onclick=()=>{const s=b.closest('.screen');if(validate(s))show(current+1)});
+  document.querySelectorAll('[data-back]').forEach(b=>b.onclick=()=>show(current-1));
+  document.querySelectorAll('.choices').forEach(group=>{const max=Number(group.dataset.max||999);const single=group.classList.contains('single');const hidden=document.querySelector('input[name="'+group.dataset.name+'"]');group.querySelectorAll('.choice').forEach(btn=>btn.onclick=()=>{if(single){group.querySelectorAll('.choice').forEach(x=>x.classList.remove('selected'));btn.classList.add('selected')}else{if(!btn.classList.contains('selected')&&group.querySelectorAll('.selected').length>=max)return;btn.classList.toggle('selected')}const vals=[...group.querySelectorAll('.selected')].map(x=>x.dataset.value||x.textContent.trim());if(hidden)hidden.value=vals.join(', ');const section=group.closest('.screen');section.querySelectorAll('.conditional').forEach(c=>c.classList.toggle('show',single&&vals[0]===c.dataset.if));const err=section.querySelector('.error');if(err)err.style.display='none'})});
+  document.addEventListener('keydown',e=>{if(e.key==='Enter'&&current>0&&current<14&&e.target.tagName!=='TEXTAREA'){e.preventDefault();const b=document.querySelector('[data-screen="'+current+'"] [data-next]');if(b)b.click()}});
+  document.getElementById('intakeForm').addEventListener('submit',async e=>{e.preventDefault();const status=document.getElementById('status'),btn=document.getElementById('submitBtn');if(FORM_ID.startsWith('VUL_HIER')){status.textContent='De questionnaire is klaar. Voeg alleen nog je nieuwe Forminit Form ID toe om de antwoorden te versturen.';status.className='status show';return}btn.disabled=true;btn.textContent='Versturen...';try{const forminit=new Forminit();const fd=new FormData(e.target);const {error}=await forminit.submit(FORM_ID,fd);if(error)throw error;status.textContent='✓ Bedankt! Je intake is succesvol verstuurd.';status.className='status show';btn.style.display='none'}catch(err){status.textContent='Versturen is niet gelukt. Probeer het opnieuw.';status.className='status show';btn.disabled=false;btn.textContent='Verstuur mijn intake'}});
+})();
+</script>
+
+<script>
+(function(){
+  const input=document.getElementById('logoFiles');
+  const drop=document.getElementById('logoDrop');
+  const list=document.getElementById('logoFileList');
+  if(!input||!drop||!list) return;
+
+  const allowed=['ai','eps','svg','pdf','png','jpg','jpeg'];
+  const max=5*1024*1024;
+
+  function render(){
+    list.innerHTML='';
+    [...input.files].forEach(file=>{
+      const li=document.createElement('li');
+      const ext=(file.name.split('.').pop()||'').toLowerCase();
+      const ok=allowed.includes(ext)&&file.size<=max;
+      li.innerHTML='<span>'+(ok?'✓ ':'⚠ ')+file.name+'</span><span>'+((file.size/1024/1024).toFixed(1))+' MB</span>';
+      list.appendChild(li);
+    });
+  }
+  input.addEventListener('change',render);
+  ['dragenter','dragover'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('drag')}));
+  ['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove('drag')}));
+  drop.addEventListener('drop',e=>{
+    const dt=new DataTransfer();
+    [...e.dataTransfer.files].forEach(f=>dt.items.add(f));
+    input.files=dt.files;
+    render();
+  });
+})();
+</script>
+
+
+<script>
+(function () {
+  const FORM_ID = "pusvmotmzs9";
+  const ENDPOINT = "https://forminit.com/f/" + FORM_ID;
+  const form = document.getElementById("intakeForm");
+  const submitBtn = document.getElementById("submitBtn");
+  const statusEl = document.getElementById("status");
+  const answersField = document.getElementById("forminitAnswers");
+
+  if (!form || !submitBtn) return;
+
+  function collectReadableAnswers() {
+    const lines = [];
+    document.querySelectorAll(".screen.question").forEach((screen) => {
+      const title = screen.querySelector("h2");
+      if (!title || screen.classList.contains("end")) return;
+
+      const question = title.textContent.trim();
+      let answer = "";
+
+      const textInput = screen.querySelector('input:not([type="file"]):not([type="hidden"]), textarea');
+      if (textInput && textInput.value.trim()) answer = textInput.value.trim();
+
+      const selected = [...screen.querySelectorAll(".selected, .active")]
+        .filter(el => el.matches("button, .option, .choice"))
+        .map(el => el.textContent.trim())
+        .filter(Boolean);
+      if (selected.length) answer = [...new Set(selected)].join(", ");
+
+      const checked = [...screen.querySelectorAll('input:checked')]
+        .map(el => el.value || el.closest("label")?.textContent.trim())
+        .filter(Boolean);
+      if (checked.length) answer = checked.join(", ");
+
+      if (answer) lines.push(question + "\n" + answer);
+    });
+    return lines.join("\n\n");
+  }
+
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    for (const input of form.querySelectorAll('input[type="file"]')) {
+      for (const file of input.files || []) {
+        if (file.size > 5 * 1024 * 1024) {
+          if (statusEl) statusEl.textContent = "Een bestand is groter dan 5 MB. Kies een kleiner bestand.";
+          return;
+        }
+      }
+    }
+
+    answersField.value = collectReadableAnswers();
+
+    const original = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Even versturen…";
+    if (statusEl) statusEl.textContent = "";
+
+    try {
+      const response = await fetch(ENDPOINT, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { "Accept": "application/json" }
+      });
+
+      if (!response.ok) throw new Error("Forminit response " + response.status);
+
+      submitBtn.textContent = "Intake verstuurd ✓";
+      if (statusEl) statusEl.textContent = "Dank je wel! Je intake is succesvol ontvangen.";
+    } catch (error) {
+      console.error(error);
+      submitBtn.disabled = false;
+      submitBtn.textContent = original;
+      if (statusEl) statusEl.textContent = "Het versturen is niet gelukt. Probeer het nog een keer.";
+    }
+  });
+})();
+</script>
+
+</body></html>
